@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="/"></base>
+    <title>Crossover Blood donation</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Real time bloody donation system">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="styles/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="">
+    </header>
+
+    <main>
+        <app-container>
+            Loading...
+        </app-container>
+    </main>
+   
+   <!-- IE required polyfills (order matters) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script> 
+   <script src="vendor/es6-shim.min.js"></script>
+   <script src="vendor/system-polyfills.js"></script>
+   
+   <script src="vendor/angular2-polyfills.js"></script>
+   <script src="vendor/system.src.js"></script>
+   <script src="vendor/Rx.js"></script>
+   <script src="vendor/angular2.dev.js"></script>
+   <script src="vendor/router.dev.js"></script>
+   <script src="vendor/lodash/index.js"></script>
+   
+    <script src="https://js.arcgis.com/4.0beta3/"></script>
+    <script>
+
+      window.dojoConfig = {
+        async: true
+      };
+      var deps = [
+        'esri/Map',
+        'esri/Graphic',
+        'esri/PopupTemplate',
+        'esri/views/MapView',
+        'esri/widgets/Search',
+        'esri/widgets/Search/SearchViewModel',
+        'esri/widgets/Home/HomeViewModel',
+        'esri/widgets/Locate',
+        'esri/widgets/Locate/LocateViewModel',
+        'esri/geometry/Polyline',
+        'esri/geometry/Circle',
+        'esri/geometry/Polygon',
+        'esri/geometry/Point',
+        'esri/geometry/SpatialReference',
+        'esri/symbols/MarkerSymbol',
+        'esri/symbols/SimpleMarkerSymbol',
+        'esri/symbols/SimpleFillSymbol',
+        'esri/symbols/SimpleLineSymbol',
+        'esri/symbols/PictureMarkerSymbol',
+        'esri/layers/FeatureLayer',
+        'esri/layers/GraphicsLayer'
+      ];
+      var moduleName = function (name) { return name.match(/[^\/]+$/).shift(); };
+      function register(name, mods) {
+          System.register(name, [], function (exp) {
+              return {
+                  setters: [],
+                  execute: function () {
+                      mods.map(function (mod, idx) {
+                          exp(moduleName(deps[idx]), mod);
+                      });
+                  }
+              };
+          });
+      }
+      System.config({
+          baseURL: '/vendor',
+          defaultJSExtensions: true,
+          warnings: true,
+          paths: {
+            lodash: './vendor/lodash/index.js'
+          },
+          packages: { 'app': { format: 'register', defaultExtension: 'js' } }
+      });
+      require(deps, function () {
+          var modules = [];
+          for (var _i = 0; _i < arguments.length; _i++) {
+              modules[_i - 0] = arguments[_i];
+          }
+          register('esri-mods', modules);
+          register('esri/Graphic', modules);
+          register('esri/PopupTemplate', modules);
+          register('esri/views/MapView', modules);
+          register('esri/widgets/Search', modules);
+          register('esri/widgets/Search/SearchViewModel', modules);
+          register('esri/widgets/Locate', modules);
+          register('esri/widgets/Locate/LocateViewModel', modules);
+          register('esri/geometry/Point', modules);
+          register('esri/geometry/Circle', modules);
+          register('esri/geometry/Polyline', modules);
+          register('esri/geometry/Polygon', modules);
+          register('esri/geometry/SpatialReference', modules);
+          register('esri/symbols/SimpleFillSymbol', modules);
+          register('esri/symbols/SimpleLineSymbol', modules);
+          register('esri/symbols/SimpleMarkerSymbol', modules);
+          register('esri/symbols/PictureMarkerSymbol', modules);
+          register('esri/symbols/MarkerSymbol', modules);
+          register('esri/layers/FeatureLayer', modules);
+          register('esri/layers/GraphicsLayer', modules);
+          System.import('./app/main')
+              .then(null, console.error.bind(console));
+      });
+    </script>
+
+</body>
+</html>
